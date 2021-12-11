@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Student</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous" />
+</head>
+
+<body>
+  <div class="container p-2">
+    <h2 class="text-primary">Add Student</h2>
+    <form th:action="@{saveStudent}" th:object="${student}" method="POST">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <input type="text" class="form-control" th:field="*{firstName}" placeholder="First Name" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <input type="text" class="form-control" th:field="*{lastName}" placeholder="Last Name" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <input type="text" class="form-control" th:field="*{regNum}" placeholder="Registration Number" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <input type="email" class="form-control" th:field="*{email}" placeholder="Email Address" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <select name="gender" class="form-control">
+              <option th:each="gen : ${gender}" th:text="${gen}"></option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <select name="institution" class="form-control">
+              <option th:each="institution : ${institutions}" th:value="${institution.id}" th:text="${institution.name}"></option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <select name="course" class="form-control">
+              <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <input type="submit" class="btn btn-primary" value="Save">
+    </form>
+  </div>
+</body>
+
+</html>

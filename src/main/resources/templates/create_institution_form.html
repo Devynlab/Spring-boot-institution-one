@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Institution</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous" />
+</head>
+
+<body>
+  <div class="container p-2">
+    <h2 class="text-primary">Add An Institution</h2>
+    <form th:action="@{saveInstitution}" th:object="${institution}" method="POST">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <input type="text" class="form-control" th:field="*{name}" placeholder="Name" />
+            <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <input type="url" class="form-control" th:field="*{website}" placeholder="Website" />
+            <p th:if="${#fields.hasErrors('website')}" th:errorclass="error" th:errors="*{website}">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <input type="text" class="form-control" th:field="*{address}" placeholder="Address" />
+            <p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{address}">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <input type="text" class="form-control" th:field="*{yearFounded}" placeholder="Year Founded" />
+            <p th:if="${#fields.hasErrors('yearFounded')}" th:errorclass="error" th:errors="*{yearFounded}">
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <input type="text" class="form-control" th:field="*{vision}" placeholder="Vision" />
+            <p th:if="${#fields.hasErrors('vision')}" th:errorclass="error" th:errors="*{vision}">
+          </div>
+        </div>
+      </div>
+      <input type="submit" class="btn btn-primary" value="Save" />
+    </form>
+  </div>
+</body>
+
+</html>

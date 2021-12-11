@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student List</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous" />
+</head>
+
+<body>
+  <div class="container p-2">
+    <h1 class="text-primary">Student List</h1>
+    <a th:href="@{/students/createStudentForm}" class="btn btn-primary m-3">Add Student</a>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Registration Number</th>
+          <th>Email</th>
+          <th>Gender</th>
+          <th>Institution</th>
+          <th>Course</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="student : ${studentList}">
+          <td th:text="${student.firstName}"></td>
+          <td th:text="${student.lastName}"></td>
+          <td th:text="${student.regNum}"></td>
+          <td th:text="${student.email}"></td>
+          <td th:text="${student.gender}"></td>
+          <td th:text="${student.institution.name}"></td>
+          <td th:text="${student.course.name}"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>
