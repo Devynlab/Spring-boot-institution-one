@@ -9,11 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Table(name = "institutions")
@@ -21,32 +18,51 @@ public class Institution {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
+
   @Column(unique = true)
-  @NotBlank(message = "Institution Name cannot be empty.")
+  @NotNull(message = "Institution Name cannot be empty.")
   @Size(min = 5, max = 250)
   private String name;
-  @NotBlank(message = "Institution Address cannot be empty.")
+
+  @NotNull(message = "Institution Address cannot be empty.")
   private String address;
-  @NotBlank(message = "Institution Website cannot be empty.")
-  @URL(message = "Enter a valid url.")
+
+  @NotNull(message = "Institution Website cannot be empty.")
   private String website;
-  @NotBlank(message = "Institution Year Founded cannot be empty.")
+
+  @NotNull(message = "Institution Year Founded cannot be empty.")
   @Size(min = 1900, max = 2021)
   @Column(name = "year_founded")
   private int yearFounded;
-  @NotBlank(message = "Institution vision cannot be empty.")
+
+  @NotNull(message = "Institution vision cannot be empty.")
   private String vision;
-  @NotBlank
+
+  @NotNull
   @OneToMany(mappedBy = "institution")
   private List<Student> students;
-  @NotEmpty
-  @NotBlank
+
+  @NotNull
   @OneToMany(mappedBy = "institution")
   private List<Course> courses;
   // @OneToMany(targetEntity = Student.class, cascade = CascadeType.ALL)
   // @JoinColumn(name = "is_fk", referencedColumnName = "id")
   // @OneToMany(targetEntity = Course.class, cascade = CascadeType.ALL)
   // @JoinColumn(name = "ic_fk", referencedColumnName = "id")
+
+  public Institution() {}
+
+  public Institution(@NotNull(message = "Institution Name cannot be empty.") @Size(min = 5, max = 250) String name,
+      @NotNull(message = "Institution Address cannot be empty.") String address,
+      @NotNull(message = "Institution Website cannot be empty.") String website,
+      @NotNull(message = "Institution Year Founded cannot be empty.") @Size(min = 1900, max = 2021) int yearFounded,
+      @NotNull(message = "Institution vision cannot be empty.") String vision) {
+    this.name = name;
+    this.address = address;
+    this.website = website;
+    this.yearFounded = yearFounded;
+    this.vision = vision;
+  }
 
   public long getId() {
     return id;

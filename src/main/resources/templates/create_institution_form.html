@@ -18,31 +18,32 @@
         <div class="col-md-6">
           <div class="form-group">
             <input type="text" class="form-control" th:field="*{name}" placeholder="Name" />
-            <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}">
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"> Name Error></p>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
             <input type="url" class="form-control" th:field="*{website}" placeholder="Website" />
-            <p th:if="${#fields.hasErrors('website')}" th:errorclass="error" th:errors="*{website}">
+            <p th:if="${#fields.hasErrors('website')}" th:errors="*{website}">
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
             <input type="text" class="form-control" th:field="*{address}" placeholder="Address" />
-            <p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{address}">
+            <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}">
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <input type="text" class="form-control" th:field="*{yearFounded}" placeholder="Year Founded" />
-            <p th:if="${#fields.hasErrors('yearFounded')}" th:errorclass="error" th:errors="*{yearFounded}">
+            <input type="number" class="form-control" th:field="*{yearFounded}" placeholder="Year Founded" />
+            <p th:if="${#fields.hasErrors('yearFounded')}" th:errors="*{yearFounded}">
           </div>
         </div>
         <div class="col-md-12">
           <div class="form-group">
             <input type="text" class="form-control" th:field="*{vision}" placeholder="Vision" />
-            <p th:if="${#fields.hasErrors('vision')}" th:errorclass="error" th:errors="*{vision}">
+            <p th:if="${#fields.hasErrors('vision')}" th:errors="*{vision}">
           </div>
         </div>
       </div>
