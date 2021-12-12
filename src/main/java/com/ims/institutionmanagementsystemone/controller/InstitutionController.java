@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class InstitutionController {
@@ -27,16 +26,15 @@ public class InstitutionController {
   }
 
   @GetMapping("/institutions/createInstitutionForm")
-  public String createInstitutionForm(Model model) {
-    Institution institution = new Institution();
-    model.addAttribute("institution", institution);
+  public String createInstitutionForm(Institution institution) {
     return "create_institution_form";
   }
 
   @PostMapping("/institutions/saveInstitution")
-  public String saveInstitution(@Valid @RequestBody @ModelAttribute("institution") Institution institution, BindingResult bindingResult) {
-    if (bindingResult.hasErrors()) {
-      return "create_institution_form";
+  public String saveInstitution(@Valid @ModelAttribute("institution") Institution institution, BindingResult result) {
+    // Institution institution2 = new Institution();
+    if (result.hasErrors()) {
+      return "redirect:/institutions/createInstitutionForm";
     }
     institutionService.saveInstitution(institution);
     return "redirect:/institutions";

@@ -21,6 +21,7 @@
           <th>Address</th>
           <th>Website</th>
           <th>Year Founded</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -29,6 +30,9 @@
           <td th:text="${institution.address}"></td>
           <td th:text="${institution.website}"></td>
           <td th:text="${institution.yearFounded}"></td>
+          <td>
+            <a th:href="@{/institutions/deleteInstitution/} + ${institution.id}" class="btn btn-danger">Delete</a>
+          </td>
         </tr>
       </tbody>
     </table>
