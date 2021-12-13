@@ -61,7 +61,12 @@ public class StudentController {
   @GetMapping("/students/updateStudentForm/{id}")
   public String updateStudentForm(@PathVariable(value = "id") long id, Model model) {
     Student student = studentService.getStudentById(id);
+    ArrayList<Institution> institutions = (ArrayList<Institution>) institutionService.listAllInstitutions();
+    ArrayList<Course> courses = (ArrayList<Course>) courseService.listAllCourses();
     model.addAttribute("student", student);
+    model.addAttribute("gender", gender);
+    model.addAttribute("institutions", institutions);
+    model.addAttribute("courses", courses);
     return "update_student_form";
   }
 

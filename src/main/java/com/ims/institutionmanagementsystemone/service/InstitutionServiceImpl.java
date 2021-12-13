@@ -15,12 +15,12 @@ public class InstitutionServiceImpl implements InstitutionService {
   @Autowired
   private InstitutionRepository institutionRepo;
 
-  @Override
+  // @Override
   public List<Institution> listAllInstitutions() {
     return institutionRepo.findAll();
   }
 
-  @Override
+  // @Override
   public Institution getInstitutionById(long id) {
     Optional<Institution> opt = institutionRepo.findById(id);
     Institution institution = null;

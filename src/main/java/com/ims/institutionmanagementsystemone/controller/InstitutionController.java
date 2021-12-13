@@ -5,7 +5,6 @@ import javax.validation.Valid;
 import com.ims.institutionmanagementsystemone.model.Institution;
 import com.ims.institutionmanagementsystemone.service.InstitutionService;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,16 +32,16 @@ public class InstitutionController {
   }
 
   @PostMapping("/institutions/saveInstitution")
-  public String saveInstitution(@Valid @ModelAttribute("institution") Institution institution, BindingResult result, ConstraintViolationException exception) {
+  public String saveInstitution(@Valid @ModelAttribute("institution") Institution institution, BindingResult result) {
     if (result.hasErrors()) {
       return "create_institution_form";
     }
-    if (exception != null) {
-      System.out.println("------------------------------------------------------------------");
-      System.out.println("Catch this error.");
-      System.out.println("------------------------------------------------------------------");
-      return "create_institution_form";
-    }
+    // if (exception != null) {
+    //   System.out.println("------------------------------------------------------------------");
+    //   System.out.println("Catch this error.");
+    //   System.out.println("------------------------------------------------------------------");
+    //   return "create_institution_form";
+    // }
     institutionService.saveInstitution(institution);
     return "redirect:/institutions";
   }

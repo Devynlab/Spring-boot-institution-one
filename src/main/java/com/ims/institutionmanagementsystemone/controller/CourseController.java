@@ -47,7 +47,9 @@ public class CourseController {
   @GetMapping("/courses/updateCourseForm/{id}")
   public String updateCourseForm(@PathVariable(value = "id") long id, Model model) {
     Course course = courseService.getCourseById(id);
+    ArrayList<Institution> institutions = (ArrayList<Institution>) institutionService.listAllInstitutions();
     model.addAttribute("course", course);
+    model.addAttribute("institutions", institutions);
     return "update_course_form";
   }
 

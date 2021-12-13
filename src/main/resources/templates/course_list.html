@@ -60,7 +60,7 @@
               <td th:text="${course.institution.name}"></td>
               <td>
                 <div class="row justify-content-center">
-                  <a th:href="@{/courses/deleteCourse/} + ${course.id}" class="btn btn-sm btn-primary">Update</a>
+                  <a th:href="@{/courses/updateCourseForm/} + ${course.id}" class="btn btn-sm btn-primary">Update</a>
                   &nbsp;
                   <a th:href="@{/courses/deleteCourse/} + ${course.id}" class="btn btn-sm btn-danger">Delete</a>
                 </div>

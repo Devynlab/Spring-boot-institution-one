@@ -64,7 +64,7 @@
               <td th:text="${institution.yearFounded}"></td>
               <td>
                 <div class="row justify-content-center">
-                  <a th:href="@{/institutions/updateInstitution/} + ${institution.id}" class="btn btn-sm btn-primary">Update</a>
+                  <a th:href="@{/institutions/updateInstitutionForm/} + ${institution.id}" class="btn btn-sm btn-primary">Update</a>
                   &nbsp;
                   <a th:href="@{/institutions/deleteInstitution/} + ${institution.id}" class="btn btn-sm btn-danger">Delete</a>
                 </div>

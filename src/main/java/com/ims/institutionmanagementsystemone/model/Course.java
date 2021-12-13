@@ -2,7 +2,6 @@ package com.ims.institutionmanagementsystemone.model;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,15 +16,14 @@ public class Course {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
-  @Column(unique = true)
-  private String code;
+
   private String name;
+
   @OneToMany(mappedBy = "course")
   private List<Student> students;
+
   @ManyToOne
   private Institution institution;
-  // @OneToMany(targetEntity = Student.class, cascade = CascadeType.ALL)
-  // @JoinColumn(name = "cs_fk", referencedColumnName = "id")
 
   public long getId() {
     return id;
@@ -33,14 +31,6 @@ public class Course {
 
   public void setId(long id) {
     this.id = id;
-  }
-
-  public String getCode() {
-    return code;
-  }
-
-  public void setCode(String code) {
-    this.code = code;
   }
 
   public String getName() {
