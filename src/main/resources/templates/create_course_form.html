@@ -22,18 +22,16 @@
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <input type="text" class="form-control" th:field="*{code}" placeholder="Code" required>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
             <select name="institution" class="form-control">
               <option th:each="institution : ${institutions}" th:value="${institution.id}" th:text="${institution.name}"></option>
             </select>
           </div>
         </div>
       </div>
-      <input type="submit" class="btn btn-primary" value="Save">
+      <div class="row justify-content-around">
+        <a th:href="@{/courses}" class="btn btn-secondary">Back</a>
+        <input type="submit" class="btn btn-primary" value="Save" />
+      </div>
     </form>
   </div>
 </body>

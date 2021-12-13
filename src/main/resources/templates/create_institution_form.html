@@ -17,36 +17,39 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <input type="text" class="form-control" th:field="*{name}" placeholder="Name" />
+            <input type="text" class="form-control" th:field="*{name}" placeholder="Name" required />
             <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <input type="url" class="form-control" th:field="*{website}" placeholder="Website" />
+            <input type="url" class="form-control" th:field="*{website}" placeholder="Website" required />
             <p th:if="${#fields.hasErrors('website')}" th:errors="*{website}">
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <input type="text" class="form-control" th:field="*{address}" placeholder="Address" />
+            <input type="text" class="form-control" th:field="*{address}" placeholder="Address" required />
             <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}">
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <input type="number" class="form-control" th:field="*{yearFounded}" placeholder="Year Founded" />
+            <input type="number" class="form-control" th:field="*{yearFounded}" placeholder="Year Founded" required />
             <p th:if="${#fields.hasErrors('yearFounded')}" th:errors="*{yearFounded}">
           </div>
         </div>
         <div class="col-md-12">
           <div class="form-group">
-            <input type="text" class="form-control" th:field="*{vision}" placeholder="Vision" />
+            <input type="text" class="form-control" th:field="*{vision}" placeholder="Vision" required />
             <p th:if="${#fields.hasErrors('vision')}" th:errors="*{vision}">
           </div>
         </div>
       </div>
-      <input type="submit" class="btn btn-primary" value="Save" />
+      <div class="row justify-content-around">
+        <a th:href="@{/institutions}" class="btn btn-secondary">Back</a>
+        <input type="submit" class="btn btn-primary" value="Save" />
+      </div>
     </form>
   </div>
 </body>
