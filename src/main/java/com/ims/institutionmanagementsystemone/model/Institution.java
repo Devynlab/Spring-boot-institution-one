@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "institutions")
@@ -19,32 +17,20 @@ public class Institution {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  // @Column()
-  @NotEmpty(message = "Institution Name cannot be empty.")
+  @Column(unique = true)
   private String name;
 
-  @NotEmpty(message = "Institution Address cannot be empty.")
   private String address;
-
-  @NotEmpty(message = "Institution Website cannot be empty.")
   private String website;
-
-  @NotNull(message = "Institution Year Founded cannot be empty.")
-  @Column(name = "year_founded")
   private Integer yearFounded;
-
-  @NotEmpty(message = "Institution vision cannot be empty.")
   private String vision;
+
+  // @ManyToMany(targetEntity = Course.class, mappedBy = "institutions")
+  @OneToMany(mappedBy = "institution")
+  private List<Course> courses;
 
   @OneToMany(mappedBy = "institution")
   private List<Student> students;
-
-  @OneToMany(mappedBy = "institution")
-  private List<Course> courses;
-  // @OneToMany(targetEntity = Student.class, cascade = CascadeType.ALL)
-  // @JoinColumn(name = "is_fk", referencedColumnName = "id")
-  // @OneToMany(targetEntity = Course.class, cascade = CascadeType.ALL)
-  // @JoinColumn(name = "ic_fk", referencedColumnName = "id")
 
   public long getId() {
     return id;
@@ -94,19 +80,19 @@ public class Institution {
     this.vision = vision;
   }
 
-  public List<Student> getStudents() {
-    return students;
-  }
-
-  public void setStudents(List<Student> students) {
-    this.students = students;
-  }
-
   public List<Course> getCourses() {
     return courses;
   }
 
   public void setCourses(List<Course> courses) {
     this.courses = courses;
+  }
+
+  public List<Student> getStudents() {
+    return students;
+  }
+
+  public void setStudents(List<Student> students) {
+    this.students = students;
   }
 }

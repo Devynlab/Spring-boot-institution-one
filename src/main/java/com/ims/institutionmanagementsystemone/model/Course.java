@@ -21,7 +21,8 @@ public class Course {
 
   @OneToMany(mappedBy = "course")
   private List<Student> students;
-
+  
+  // @ManyToMany(targetEntity = Institution.class)
   @ManyToOne
   private Institution institution;
 
@@ -41,19 +42,19 @@ public class Course {
     this.name = name;
   }
 
-  public List<Student> getStudents() {
-    return students;
-  }
-
-  public void setStudents(List<Student> students) {
-    this.students = students;
-  }
-
   public Institution getInstitution() {
     return institution;
   }
 
   public void setInstitution(Institution institution) {
     this.institution = institution;
+  }
+
+  public List<Student> getStudents() {
+    return students;
+  }
+
+  public void setStudents(List<Student> students) {
+    this.students = students;
   }
 }

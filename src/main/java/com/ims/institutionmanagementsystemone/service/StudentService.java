@@ -9,4 +9,6 @@ public interface StudentService {
   Student getStudentById(long id);
   void saveStudent(Student student);
   void deleteStudentById(long id);
+  List<Student> getStudentsByCourseId(long id);
+  List<Student> getStudentsByInstitutionId(long id);
 }

@@ -37,6 +37,7 @@
       </ul>
     </div>
   </nav>
+  <h2 id="successMessage" th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></h2>
   <div class="m-1">
     <div class="card mb-3">
       <div class="card-header">
@@ -61,7 +62,9 @@
               <td>
                 <div class="row justify-content-center">
                   <a th:href="@{/courses/updateCourseForm/} + ${course.id}" class="btn btn-sm btn-primary">Update</a>
-                  &nbsp;
+                  &nbsp;&nbsp;
+                  <a th:href="@{/students/course/} + ${course.id}" class="btn btn-sm btn-secondary">View Students</a>
+                  &nbsp;&nbsp;
                   <a th:href="@{/courses/deleteCourse/} + ${course.id}" class="btn btn-sm btn-danger">Delete</a>
                 </div>
               </td>
@@ -72,6 +75,11 @@
     </div>
   </div>
   <script>
+    setTimeout(
+      function () {
+        $("#successMessage").delay(3000).fadeOut('fast');
+      }, 1000
+    );
     $(document).ready(function () {
       $("#tableId").DataTable({});
     });

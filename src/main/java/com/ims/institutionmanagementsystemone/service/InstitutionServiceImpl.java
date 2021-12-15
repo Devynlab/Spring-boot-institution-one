@@ -3,7 +3,6 @@ package com.ims.institutionmanagementsystemone.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.ims.institutionmanagementsystemone.model.Course;
 import com.ims.institutionmanagementsystemone.model.Institution;
 import com.ims.institutionmanagementsystemone.repository.InstitutionRepository;
 
@@ -37,10 +36,6 @@ public class InstitutionServiceImpl implements InstitutionService {
   }
 
   public void deleteInstitutionById(long id) {
-    Course course = new Course();
-    if(course != null ){
-      System.out.println("You can not delete the institution");
-    }
     institutionRepo.deleteById(id);
   }
 }

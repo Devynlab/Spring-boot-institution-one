@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class StudentController {
@@ -40,6 +42,18 @@ public class StudentController {
     return "student_list";
   }
 
+  @RequestMapping(value = "/students/course/{id}")
+  public String getCoursesByInstitutionId(@PathVariable long id, Model model) {
+    model.addAttribute("studentList", studentService.getStudentsByCourseId(id));
+    return "student_list";
+  }
+
+  @RequestMapping(value = "/students/institution/{id}")
+  public String getStudentsByInstitutionId(@PathVariable long id, Model model) {
+    model.addAttribute("studentList", studentService.getStudentsByInstitutionId(id));
+    return "student_list";
+  }
+
   @GetMapping("/students/createStudentForm")
   public String createStudentForm(Model model) {
     Student student = new Student();
@@ -53,8 +67,12 @@ public class StudentController {
   }
 
   @PostMapping("/students/saveStudent")
-  public String saveStudent(@ModelAttribute("student") Student student) {
+  public String saveStudent(@ModelAttribute("student") Student student, RedirectAttributes redirectAttributes) {
+    redirectAttributes.addFlashAttribute("message", "Failed");
+    redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
     studentService.saveStudent(student);
+    redirectAttributes.addFlashAttribute("message", "Success");
+    redirectAttributes.addFlashAttribute("alertClass", "alert-success");
     return "redirect:/students";
   }
 

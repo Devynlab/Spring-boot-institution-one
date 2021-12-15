@@ -1,11 +1,13 @@
 package com.ims.institutionmanagementsystemone.controller;
 
+
 import javax.validation.Valid;
 
 import com.ims.institutionmanagementsystemone.model.Institution;
 import com.ims.institutionmanagementsystemone.service.InstitutionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class InstitutionController {
@@ -32,17 +35,20 @@ public class InstitutionController {
   }
 
   @PostMapping("/institutions/saveInstitution")
-  public String saveInstitution(@Valid @ModelAttribute("institution") Institution institution, BindingResult result) {
+  public String saveInstitution(@Valid @ModelAttribute("institution") Institution institution, BindingResult result, RedirectAttributes redirectAttributes) {
     if (result.hasErrors()) {
       return "create_institution_form";
     }
-    // if (exception != null) {
-    //   System.out.println("------------------------------------------------------------------");
-    //   System.out.println("Catch this error.");
-    //   System.out.println("------------------------------------------------------------------");
-    //   return "create_institution_form";
-    // }
-    institutionService.saveInstitution(institution);
+    try {
+      institutionService.saveInstitution(institution);
+      redirectAttributes.addFlashAttribute("message", "Success 👍");
+      redirectAttributes.addFlashAttribute("alertClass", "alert-success fs-1");
+    } catch (DataIntegrityViolationException exception) {
+      // System.out.println("Record already exists in DB.");
+      // System.out.println(exception);
+      redirectAttributes.addFlashAttribute("message", "Failed! Institution with the name '" + institution.getName() + "' already exists.");
+      redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
+    }
     return "redirect:/institutions";
   }
 
@@ -54,8 +60,16 @@ public class InstitutionController {
   }
 
   @GetMapping("/institutions/deleteInstitution/{id}")
-  public String deleteInstitution(@PathVariable(value = "id") long id) {
-    this.institutionService.deleteInstitutionById(id);
+  public String deleteInstitution(@PathVariable(value = "id") long id, RedirectAttributes redirectAttributes) {
+    try {
+      institutionService.deleteInstitutionById(id);
+      redirectAttributes.addFlashAttribute("message", "Success");
+      redirectAttributes.addFlashAttribute("alertClass", "alert-success");
+    } catch (DataIntegrityViolationException exception) {
+      System.out.println("Cannot delete the institution.");
+      redirectAttributes.addFlashAttribute("message", "Failed! '" + institutionService.getInstitutionById(id).getName() + "' has a course attached to it.");
+      redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
+    }
     return "redirect:/institutions";
   }
 }
