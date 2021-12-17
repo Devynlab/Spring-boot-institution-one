@@ -73,7 +73,11 @@
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
 				<configuration>
+<<<<<<< HEAD
 					<url>${postgres://lervmlfrpbiyxb:ed5ed06fe2c0e8d45c766d074898b88883c4d9e1a7ef6597cb2ec321f1f913a0@ec2-54-172-126-94.compute-1.amazonaws.com:5432/d760is1t93oam7}</url>
+=======
+					<url>${env.JDBC_DATABASE_URL}</url>
+>>>>>>> 24c5a0c6c6fe2c926f69580c138ce9cdbbf9d214
 				</configuration>
 			</plugin>
 		</plugins>
