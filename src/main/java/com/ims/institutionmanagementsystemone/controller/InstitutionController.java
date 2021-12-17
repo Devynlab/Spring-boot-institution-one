@@ -21,7 +21,7 @@ public class InstitutionController {
   private InstitutionService institutionService;
 
   // List all institutions
-  @GetMapping("/institutions")
+  @GetMapping("/")
   public String institutionListView(Model model) {
     model.addAttribute("institutionList", institutionService.listAllInstitutions());
     return "institution_list";
@@ -44,7 +44,7 @@ public class InstitutionController {
       redirectAttributes.addFlashAttribute("message", "Failed! Institution with the name '" + institution.getName() + "' already exists.");
       redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
     }
-    return "redirect:/institutions";
+    return "redirect:/";
   }
 
   // Display form for updating a given insititution
@@ -67,6 +67,6 @@ public class InstitutionController {
       redirectAttributes.addFlashAttribute("message", "Failed! '" + institutionService.getInstitutionById(id).getName() + "' has a course assigned to it.");
       redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
     }
-    return "redirect:/institutions";
+    return "redirect:/";
   }
 }
