@@ -46,9 +46,4 @@ public class StudentServiceImpl implements StudentService {
   public List<Student> getStudentsByCourseId(long id) {
     return studentRepo.findByCourseId(id);
   }
-
-  // @Override
-  // public List<Student> getStudentsByInstitutionId(long id) {
-  //   return studentRepo.findByInstitutionId(id);
-  // }
 }

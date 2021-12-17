@@ -22,7 +22,6 @@ public class Course {
   @OneToMany(mappedBy = "course")
   private List<Student> students;
   
-  // @ManyToMany(targetEntity = Institution.class)
   @ManyToOne
   private Institution institution;
 

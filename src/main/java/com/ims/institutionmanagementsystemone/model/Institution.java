@@ -25,12 +25,8 @@ public class Institution {
   private Integer yearFounded;
   private String vision;
 
-  // @ManyToMany(targetEntity = Course.class, mappedBy = "institutions")
   @OneToMany(mappedBy = "institution")
   private List<Course> courses;
-
-  // @OneToMany(mappedBy = "institution")
-  // private List<Student> students;
 
   public long getId() {
     return id;
@@ -87,12 +83,4 @@ public class Institution {
   public void setCourses(List<Course> courses) {
     this.courses = courses;
   }
-
-  // public List<Student> getStudents() {
-  //   return students;
-  // }
-
-  // public void setStudents(List<Student> students) {
-  //   this.students = students;
-  // }
 }

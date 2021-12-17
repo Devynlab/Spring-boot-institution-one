@@ -37,13 +37,7 @@ public class CourseController {
   // List all the courses offered by a specific institution
   @RequestMapping(value = "/courses/institution/{id}")
   public String getCoursesByInstitutionId(@PathVariable long id, Model model) {
-    long institution_id = institutionService.getInstitutionById(id).getId();
-    String institution_name = institutionService.getInstitutionById(id).getName();
-    // ArrayList<Institution> institutions = (ArrayList<Institution>) institutionService.listAllInstitutions();
-    // model.addAttribute("institutions", institutions);
     model.addAttribute("course", course);
-    model.addAttribute("institution_id", institution_id);
-    model.addAttribute("institution_name", institution_name);
     model.addAttribute("courseList", courseService.getCoursesByInstitutionId(id));
     return "course_list";
   }
@@ -62,14 +56,10 @@ public class CourseController {
   @PostMapping("/courses/saveCourse")
   public String saveCourse(@ModelAttribute("course") Course course, RedirectAttributes redirectAttributes) {
     List<String> courses = new ArrayList<>();
-    // System.out.println(courseService.getCoursesByInstitutionId(course.getInstitution().getId()));
-    for (Course course2 : courseService.getCoursesByInstitutionId(course.getInstitution().getId())) {
-      // System.out.println(course2.getInstitution().getName() + " -> " + course2.getName());
-      courses.add(course2.getName());
-      // System.out.println(courses);
+    for (Course courseInInstitution : courseService.getCoursesByInstitutionId(course.getInstitution().getId())) {
+      courses.add(courseInInstitution.getName());
     }
-    // System.out.println(courses);
-    // System.out.println(course.getName());
+    // Check if the provided course name already in the given institution before saving it
     if (!courses.contains(course.getName())) {
       courseService.saveCourse(course);
       redirectAttributes.addFlashAttribute("message", "Success 👍");
@@ -84,10 +74,10 @@ public class CourseController {
   // Displaying form for updating a course
   @GetMapping("/courses/updateCourseForm/{id}")
   public String updateCourseForm(@PathVariable(value = "id") long id, Model model) {
-    Course course = courseService.getCourseById(id);
     ArrayList<Institution> institutions = (ArrayList<Institution>) institutionService.listAllInstitutions();
-    model.addAttribute("course", course);
+    Course course = courseService.getCourseById(id);
     model.addAttribute("institutions", institutions);
+    model.addAttribute("course", course);
     return "update_course_form";
   }
 
@@ -105,11 +95,3 @@ public class CourseController {
     return "redirect:/courses";
   }
 }
-// System.out.println("---------------------------------------------------------------------------------------------");
-// System.out.println(courseService.getCourseById(id).getName());
-// System.out.println(courseService.getCourseById(id).getInstitution().getName());
-// for (Course course2 : courseService.getCoursesByInstitutionId(id)) {
-//   System.out.println(course2.getName());
-// }
-// System.out.println(courseService.getCoursesByInstitutionId(id).contains(courseService.getCourseById(id)));
-// System.out.println("---------------------------------------------------------------------------------------------");

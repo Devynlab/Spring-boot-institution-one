@@ -1,6 +1,5 @@
 package com.ims.institutionmanagementsystemone.controller;
 
-
 import javax.validation.Valid;
 
 import com.ims.institutionmanagementsystemone.model.Institution;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,22 +20,22 @@ public class InstitutionController {
   @Autowired
   private InstitutionService institutionService;
 
+  // List all institutions
   @GetMapping("/institutions")
   public String institutionListView(Model model) {
     model.addAttribute("institutionList", institutionService.listAllInstitutions());
     return "institution_list";
   }
 
+  // Display form for creating an insititution
   @GetMapping("/institutions/createInstitutionForm")
   public String createInstitutionForm(Institution institution) {
     return "create_institution_form";
   }
 
+  // Saving and updating an institution
   @PostMapping("/institutions/saveInstitution")
-  public String saveInstitution(@Valid @ModelAttribute("institution") Institution institution, BindingResult result, RedirectAttributes redirectAttributes) {
-    if (result.hasErrors()) {
-      return "create_institution_form";
-    }
+  public String saveInstitution(@Valid @ModelAttribute("institution") Institution institution, RedirectAttributes redirectAttributes) {
     try {
       institutionService.saveInstitution(institution);
       redirectAttributes.addFlashAttribute("message", "Success 👍");
@@ -49,6 +47,7 @@ public class InstitutionController {
     return "redirect:/institutions";
   }
 
+  // Display form for updating a given insititution
   @GetMapping("/institutions/updateInstitutionForm/{id}")
   public String updateInstitutionForm(@PathVariable(value = "id") long id, Model model) {
     Institution institution = institutionService.getInstitutionById(id);
@@ -56,6 +55,7 @@ public class InstitutionController {
     return "update_institution_form";
   }
 
+  // Deleting an institution
   @GetMapping("/institutions/deleteInstitution/{id}")
   public String deleteInstitution(@PathVariable(value = "id") long id, RedirectAttributes redirectAttributes) {
     try {
