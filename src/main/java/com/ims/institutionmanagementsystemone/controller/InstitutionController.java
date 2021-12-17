@@ -19,7 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class InstitutionController {
-  // private static final boolean ConstraintViolationException = false;
   @Autowired
   private InstitutionService institutionService;
 
@@ -44,8 +43,6 @@ public class InstitutionController {
       redirectAttributes.addFlashAttribute("message", "Success 👍");
       redirectAttributes.addFlashAttribute("alertClass", "alert-success fs-1");
     } catch (DataIntegrityViolationException exception) {
-      // System.out.println("Record already exists in DB.");
-      // System.out.println(exception);
       redirectAttributes.addFlashAttribute("message", "Failed! Institution with the name '" + institution.getName() + "' already exists.");
       redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
     }
@@ -63,11 +60,11 @@ public class InstitutionController {
   public String deleteInstitution(@PathVariable(value = "id") long id, RedirectAttributes redirectAttributes) {
     try {
       institutionService.deleteInstitutionById(id);
-      redirectAttributes.addFlashAttribute("message", "Success");
+      redirectAttributes.addFlashAttribute("message", "Successfully deleted 👍");
       redirectAttributes.addFlashAttribute("alertClass", "alert-success");
     } catch (DataIntegrityViolationException exception) {
       System.out.println("Cannot delete the institution.");
-      redirectAttributes.addFlashAttribute("message", "Failed! '" + institutionService.getInstitutionById(id).getName() + "' has a course attached to it.");
+      redirectAttributes.addFlashAttribute("message", "Failed! '" + institutionService.getInstitutionById(id).getName() + "' has a course assigned to it.");
       redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
     }
     return "redirect:/institutions";

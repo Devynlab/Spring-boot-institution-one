@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Student</title>
+</head>
+
+<body>
+  <c:url value="/signup" var="signupUrl" />
+  <form:form id="signup" action="${signupUrl}" method="post" modelAttribute="signupForm">
+    <fieldset>
+      <form:select id="usStates" path="usState">
+      </form:select>
+      <form:select id="city" path="city">
+        <form:option value="">City</form:option>
+      </form:select>
+    </fieldset>
+    <p>
+      <button type="submit">Sign Up</button>
+    </p>
+  </form:form>
+  <c:url value="/signup" var="signupUrl" />
+  <form:form id="signup" action="${signupUrl}" method="post" modelAttribute="signupForm">
+    <fieldset>
+      <form:select id="usStates" path="usState">
+      </form:select>
+      <form:select id="city" path="city">
+        <form:option value="">City</form:option>
+      </form:select>
+    </fieldset>
+    <p>
+      <button type="submit">Sign Up</button>
+    </p>
+  </form:form>
+</body>
+
+</html>

@@ -8,68 +8,149 @@
   <title>Add Student</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
     integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
-  <div class="container p-2">
-    <h2 class="text-primary">Add Student</h2>
-    <form th:action="@{saveStudent}" th:object="${student}" method="POST">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="">First Name</label>
-            <input type="text" class="form-control" th:field="*{firstName}" placeholder="First Name" required>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="">Last Name</label>
-            <input type="text" class="form-control" th:field="*{lastName}" placeholder="Last Name" required>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="">Registration Number</label>
-            <input type="text" class="form-control" th:field="*{regNum}" placeholder="Registration Number" required>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="">Email Address</label>
-            <input type="email" class="form-control" th:field="*{email}" placeholder="Email Address" required>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="">Institution</label>
-            <select name="institution" class="form-control">
-              <option th:each="institution : ${institutions}" th:value="${institution.id}" th:text="${institution.name}"></option>
-            </select>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="">Course</label>
-            <select name="course" class="form-control">
-              <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
-            </select>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="">Gender</label>
-            <select name="gender" class="form-control">
-              <option th:each="gen : ${gender}" th:text="${gen}"></option>
-            </select>
-          </div>
-        </div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" th:href="@{/institutions}">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/institutions}">Institutions</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/courses}">Courses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" th:href="@{/students}">Students <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container p-3">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="text-primary">Add Student</h2>
       </div>
-      <div class="row justify-content-around">
-        <a th:href="@{/students}" class="btn btn-secondary">Back</a>
-        <input type="submit" class="btn btn-primary" value="Save" />
+      <div class="card-body">
+        <form th:action="@{saveStudent}" th:object="${student}" method="POST">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="">Registration Number</label>
+                <input type="text" class="form-control" th:field="*{regNum}" placeholder="Registration Number" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="">First Name</label>
+                <input type="text" class="form-control" th:field="*{firstName}" placeholder="First Name" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="">Last Name</label>
+                <input type="text" class="form-control" th:field="*{lastName}" placeholder="Last Name" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="">Email Address</label>
+                <input type="email" class="form-control" th:field="*{email}" placeholder="Email Address" required>
+              </div>
+            </div>
+            <!-- <div class="col-md-6">
+              <div class="form-group">
+                <label for="">Institution</label>
+                <select name="institution" id="" class="form-control">
+                  <option th:each="institution : ${institutions}" th:value="${institution.id}" th:text="${institution.name}"></option>
+                </select>
+              </div>
+            </div> -->
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="">Course</label>
+                <select name="course" id="" class="form-control">
+                  <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name} + ' ' + '(' + ${course.institution.name} + ')'"></option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="">Gender</label>
+                <select name="gender" class="form-control">
+                  <option th:each="gen : ${gender}" th:text="${gen}"></option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-between pl-3 pr-3">
+            <a th:href="@{/students}" class="btn btn-secondary">Back</a>
+            <input type="submit" class="btn btn-primary" value="Save" />
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
+<!-- 
+  <c:url var="findInstitutionURL" value="/institution_list" />
+  <c:url value="/institution_list" var="signupUrl" />
+  <form:form id="signup" action="${findInstitutionURL}" method="POST" modelAttribute="signupForm">
+    <fieldset>
+      <form:select id="institution" path="usState">
+      </form:select>
+      <form:select id="course" path="city">
+        <form:option value="">Course</form:option>
+      </form:select>
+    </fieldset>
+    <p>
+      <button type="submit">Sign Up</button>
+    </p>
+  </form:form>
+  <script>
+    $(document).ready(
+      function () {
+        $.getJSON('${findInstitutionURL}', {
+          ajax: 'true'
+        }, function (data) {
+          var html = '<option value="">Institution</option>';
+          var len = data.length;
+          for (var i = 0; i < len; i++) {
+            html += '<option value="' + data[i].name + '">'
+              + data[i].name + '</option>';
+          }
+          html += '</option>';
+          $('#institution').html(html);
+        });
+      });
+    $(document).ready(function () {
+      $('#institutions').change(
+        function () {
+          $.getJSON('${findUniversityCoursesURL}', {
+            institutionName: $(this).val(),
+            ajax: 'true'
+          }, function (data) {
+            var html = '<option value="">Course</option>';
+            var len = data.length;
+            for (var i = 0; i < len; i++) {
+              html += '<option value="' + data[i].name + '">'
+                + data[i].name + '</option>';
+            }
+            html += '</option>';
+            $('#course').html(html);
+          });
+        });
+    });
+  </script> 
+-->
+
 </body>
 
 </html>

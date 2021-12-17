@@ -47,8 +47,8 @@ public class StudentServiceImpl implements StudentService {
     return studentRepo.findByCourseId(id);
   }
 
-  @Override
-  public List<Student> getStudentsByInstitutionId(long id) {
-    return studentRepo.findByInstitutionId(id);
-  }
+  // @Override
+  // public List<Student> getStudentsByInstitutionId(long id) {
+  //   return studentRepo.findByInstitutionId(id);
+  // }
 }

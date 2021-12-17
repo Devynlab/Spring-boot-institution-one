@@ -2,7 +2,10 @@ package com.ims.institutionmanagementsystemone.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+// import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.ims.institutionmanagementsystemone.model.Course;
 import com.ims.institutionmanagementsystemone.model.Institution;
 import com.ims.institutionmanagementsystemone.model.Student;
@@ -11,6 +14,7 @@ import com.ims.institutionmanagementsystemone.service.InstitutionService;
 import com.ims.institutionmanagementsystemone.service.StudentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +22,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class StudentController {
+
+  private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
   @Autowired
   private StudentService studentService;
   @Autowired
@@ -35,6 +43,15 @@ public class StudentController {
     gender.add("Male");
     gender.add("Female");
   }
+
+  //
+  @RequestMapping(value = "/institution_list", method = RequestMethod.GET)
+  public @ResponseBody List<Institution> listAllInstitutions() {
+    logger.debug("Finding all institutions");
+    System.out.println(this.institutionService.listAllInstitutions());
+    return this.institutionService.listAllInstitutions();
+  }
+  //
 
   @GetMapping("/students")
   public String studentListView(Model model) {
@@ -50,7 +67,7 @@ public class StudentController {
 
   @RequestMapping(value = "/students/institution/{id}")
   public String getStudentsByInstitutionId(@PathVariable long id, Model model) {
-    model.addAttribute("studentList", studentService.getStudentsByInstitutionId(id));
+    // model.addAttribute("studentList", studentService.getStudentsByInstitutionId(id));
     return "student_list";
   }
 
@@ -68,11 +85,14 @@ public class StudentController {
 
   @PostMapping("/students/saveStudent")
   public String saveStudent(@ModelAttribute("student") Student student, RedirectAttributes redirectAttributes) {
-    redirectAttributes.addFlashAttribute("message", "Failed");
-    redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
-    studentService.saveStudent(student);
-    redirectAttributes.addFlashAttribute("message", "Success");
-    redirectAttributes.addFlashAttribute("alertClass", "alert-success");
+    try {
+      studentService.saveStudent(student);
+      redirectAttributes.addFlashAttribute("message", "Success");
+      redirectAttributes.addFlashAttribute("alertClass", "alert-success");
+    } catch (DataIntegrityViolationException exception) {
+      redirectAttributes.addFlashAttribute("message", "Failed! Student with Reg. Number '" + student.getRegNum() + "' already exists.");
+      redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
+    }
     return "redirect:/students";
   }
 

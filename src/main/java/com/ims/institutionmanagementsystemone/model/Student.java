@@ -23,8 +23,8 @@ public class Student {
   private String email;
   private String gender;
 
-  @ManyToOne
-  private Institution institution;
+  // @ManyToOne
+  // private Institution institution;
 
   @ManyToOne
   private Course course;
@@ -77,13 +77,13 @@ public class Student {
     this.gender = gender;
   }
 
-  public Institution getInstitution() {
-    return institution;
-  }
+  // public Institution getInstitution() {
+  //   return institution;
+  // }
 
-  public void setInstitution(Institution institution) {
-    this.institution = institution;
-  }
+  // public void setInstitution(Institution institution) {
+  //   this.institution = institution;
+  // }
 
   public Course getCourse() {
     return course;

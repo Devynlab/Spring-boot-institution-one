@@ -29,8 +29,8 @@ public class Institution {
   @OneToMany(mappedBy = "institution")
   private List<Course> courses;
 
-  @OneToMany(mappedBy = "institution")
-  private List<Student> students;
+  // @OneToMany(mappedBy = "institution")
+  // private List<Student> students;
 
   public long getId() {
     return id;
@@ -88,11 +88,11 @@ public class Institution {
     this.courses = courses;
   }
 
-  public List<Student> getStudents() {
-    return students;
-  }
+  // public List<Student> getStudents() {
+  //   return students;
+  // }
 
-  public void setStudents(List<Student> students) {
-    this.students = students;
-  }
+  // public void setStudents(List<Student> students) {
+  //   this.students = students;
+  // }
 }

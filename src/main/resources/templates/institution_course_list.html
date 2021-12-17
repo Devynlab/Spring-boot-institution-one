@@ -1,0 +1,181 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.css" />
+  <title>Course List</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" th:href="@{/institutions}">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/institutions}">Institutions</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" th:href="@{/courses}">Courses <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/students}">Students</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <h2 id="successMessage" th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></h2>
+  <div class="m-1">
+    <div class="card mb-3">
+      <div class="card-header">
+        <div class="row justify-content-between m-0 p-0">
+          <span class="card-title font-weight-bold m-0 p-0">Course List</span>
+          <!-- <a th:href="@{/courses/createCourseForm}" class="btn btn-sm btn-success">&nbsp;Add&nbsp;</a> -->
+          <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#addCourse">
+            Add
+          </button>
+        </div>
+      </div>
+      <div class="card-body">
+        <table id="tableId" class="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Institution</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="course : ${courseList}">
+              <td th:text="${course.name}"></td>
+              <td th:text="${course.institution.name}"></td>
+              <td>
+                <div class="row justify-content-center">
+                  <a th:href="@{/students/course/} + ${course.id}" class="btn btn-sm btn-secondary">Students</a>
+                  &nbsp;&nbsp;
+                  <!-- <a th:href="@{/courses/updateCourseForm/} + ${course.id}" class="btn btn-sm btn-primary">Update</a> -->
+                  <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editCourse">
+                    Update
+                  </button>
+                  &nbsp;&nbsp;
+                  <a th:href="@{/courses/deleteCourse/} + ${course.id}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- Create modal -->
+  <div class="modal fade" id="addCourse">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add Course</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form th:action="@{/courses/institution/} + ${institution_id}" th:object="${course}" method="POST">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="name">Course Name</label>
+                  <!-- <input type="text" id="name" name=name class="form-control" th:field="*{name}" placeholder="Name" /> -->
+                  <input type="text" class="form-control" th:field="*{name}" placeholder="Name" required>
+                  <!-- <input type="text" class="form-control" th:value="*{name}" placeholder="Name"> -->
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="institution">Institution</label>
+                  <!-- <select name="institution" id="" class="form-control">
+                    <option th:value="${institution_id}" th:text="${institution_name}"></option>
+                  </select> -->
+                  <select name="institution" class="form-control">
+                    <option th:each="institution : ${institutions}" th:value="${institution.id}" th:text="${institution.name}"></option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Update modal -->
+  <!-- <div class="modal fade" id="editCourse">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Edit Course</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form th:action="@{/courses/institution/} + ${institution_id}" th:object="${course}" method="POST">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="">Course Name</label>
+                  <input type="text" class="form-control" th:field="*{name}" name="" th:text="${institution_name}" placeholder="Name">
+                  // <option class="form-control" th:text="${institution_name}">
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="">Institution</label>
+                  // <input type="text" class="form-control"  th:field="*{institution}" th:value="${institution_id}">
+                  // <select name="institution" id="" class="form-control">
+                  <option th:value="${institution_id}" th:text="${institution_id}"></option>
+                  //</select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div> -->
+  <!-- JQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.js"></script>
+  <script>
+    setTimeout(
+      function () {
+        $("#successMessage").delay(3000).fadeOut('slow');
+      }, 1000
+    );
+    $(document).ready(function () {
+      $("#tableId").DataTable({});
+    });
+  </script>
+</body>
+
+</html>
