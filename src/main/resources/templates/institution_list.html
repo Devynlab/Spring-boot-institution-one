@@ -17,7 +17,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
     <a class="navbar-brand" th:href="@{/}">Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
       aria-expanded="false" aria-label="Toggle navigation">
@@ -39,21 +39,21 @@
   </nav>
   <h3 id="successMessage" th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></h3>
   <div class="m-1">
-    <div class="card mb-3">
-      <div class="card-header">
+    <div class="card mb-3 responsive">
+      <div class="card-header responsive">
         <div class="row justify-content-between m-0 p-0">
           <span class="card-title font-weight-bold m-0 p-0">Institution List</span>
           <a th:href="@{/institutions/createInstitutionForm}" class="btn btn-sm btn-success">&nbsp;Add&nbsp;</a>
         </div>
       </div>
-      <div class="card-body">
-        <table id="tableId" class="table table-striped">
+      <div class="card-body table-responsive">
+        <table id="tableId" class="table table-striped table nowrap">
           <thead>
             <tr>
               <th>Name</th>
               <th>Address</th>
-              <th>Year Founded</th>
-              <th class="text-center">Action</th>
+              <th>Founded</th>
+              <th class="text-right">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -61,14 +61,12 @@
               <td th:text="${institution.name}"></td>
               <td th:text="${institution.address}"></td>
               <td th:text="${institution.yearFounded}"></td>
-              <td>
-                <div class="row justify-content-center">
-                  <a th:href="@{/courses/institution/} + ${institution.id}" class="btn btn-sm btn-secondary">Courses</a>
-                  &nbsp;&nbsp;
-                  <a th:href="@{/institutions/updateInstitutionForm/} + ${institution.id}" class="btn btn-sm btn-primary">Update</a>
-                  &nbsp;&nbsp;
-                  <a th:href="@{/institutions/deleteInstitution/} + ${institution.id}" class="btn btn-sm btn-danger">Delete</a>
-                </div>
+              <td class="text-right">
+                <a th:href="@{/courses/institution/} + ${institution.id}" class="btn btn-sm btn-secondary">Courses</a>
+                &nbsp;&nbsp;
+                <a th:href="@{/institutions/updateInstitutionForm/} + ${institution.id}" class="btn btn-sm btn-primary">Update</a>
+                &nbsp;&nbsp;
+                <a th:href="@{/institutions/deleteInstitution/} + ${institution.id}" class="btn btn-sm btn-danger">Delete</a>
               </td>
             </tr>
           </tbody>
@@ -76,6 +74,8 @@
       </div>
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
   <script>
     setTimeout(
       function () {
@@ -83,7 +83,9 @@
       }, 1000
     );
     $(document).ready(function () {
-      $("#tableId").DataTable({});
+      $("#tableId").DataTable({
+        pagingType: 'full_numbers'
+      });
     });
   </script>
 </body>
