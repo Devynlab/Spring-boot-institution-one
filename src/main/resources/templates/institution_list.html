@@ -63,9 +63,9 @@
               <td th:text="${institution.yearFounded}"></td>
               <td class="text-right">
                 <a th:href="@{/courses/institution/} + ${institution.id}" class="btn btn-sm btn-secondary">Courses</a>
-                &nbsp;&nbsp;
+                &nbsp;
                 <a th:href="@{/institutions/updateInstitutionForm/} + ${institution.id}" class="btn btn-sm btn-primary">Update</a>
-                &nbsp;&nbsp;
+                &nbsp;
                 <a th:href="@{/institutions/deleteInstitution/} + ${institution.id}" class="btn btn-sm btn-danger">Delete</a>
               </td>
             </tr>
