@@ -61,9 +61,9 @@
               <td th:text="${course.institution.name}"></td>
               <td class="text-right">
                 <a th:href="@{/students/course/} + ${course.id}" class="btn btn-sm btn-secondary">Students</a>
-                &nbsp;&nbsp;
+                &nbsp;
                 <a th:href="@{/courses/updateCourseForm/} + ${course.id}" class="btn btn-sm btn-primary">Update</a>
-                &nbsp;&nbsp;
+                &nbsp;
                 <a th:href="@{/courses/deleteCourse/} + ${course.id}" class="btn btn-sm btn-danger">Delete</a>
               </td>
             </tr>
